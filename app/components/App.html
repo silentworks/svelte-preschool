@@ -1,0 +1,42 @@
+<div class="question-set">
+    <Question 
+        on:checkAnswer='checkAnswer(event.option)'
+        question='{{question}}'
+        options='{{options}}' 
+        resourceUrl='{{resource.url}}'
+    />
+</div>
+
+<script>
+    import Question from './Question.html';
+    import { questions } from '../data/questions.js';
+
+    let randomQuestion = (questions) => {
+        return questions[Math.floor(Math.random() * questions.length)];
+    }
+
+    let question = randomQuestion(questions);
+
+    export default {
+        methods: {
+            checkAnswer(answer) {
+                if (answer === this.get('answer')) {
+                    let question = randomQuestion(questions);
+                    this.set(question);
+                }
+            }
+        },
+        data() {
+            return question;
+        },
+        components: {
+            Question
+        }
+    }
+</script>
+
+<style>
+    .question-set {
+        margin-top: 20px;
+    }
+</style>

@@ -1,0 +1,73 @@
+<div class="question bounceInUp">
+    <p class="question__heading">{{question}}</p>
+    <img class="question__image" style="animation: {{animation}} 1.5s" src="{{resourceUrl}}" />
+    <ul class="question__otpion-list no-bullet clearfix">
+    {{#each options as option}}
+        <li class="question__option-item" on:click='fire( "checkAnswer", { option })'>
+            {{option}}
+        </li>
+    {{/each}}
+    </ul>
+</div>
+
+<script>
+    let animations = [
+        'zoomIn','flipInY',
+        'fadeIn','bounceIn',
+        'flipInX','lightSpeedIn'
+    ];
+
+    let randomAnimation  = () => {
+        return animations[Math.floor(Math.random() * animations.length)];
+    };
+
+    export default {
+        onrender() {
+            this.observe('question', (newV, oldV) => {
+                if (oldV !== newV) {
+                    this.set({animation: randomAnimation()});
+                }
+            })
+        },
+        data() {
+            return {
+                animation: randomAnimation()
+            }
+        }
+    }
+</script>
+
+<style>
+.question__heading {
+    font-size: 3.5rem;
+    padding: 20px;
+    text-align: center;
+}
+.question__image {
+    display: block;
+    height: 300px;
+    width: auto;
+    margin: 40px auto;
+}
+
+.question__option-item {
+    width: 43%;
+    margin: 2%;
+    font-size : 2.5rem;
+    padding: 10px;
+    display: inline-block;
+    float: left;
+
+    border: 5px solid #e1f5c4;
+    border-radius: 30%/90%;
+    text-align: center;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: box-shadow 0.5s, background-color 0.5s;
+}
+.question__option-item:hover {
+    animation: pulse 1s infinite;
+    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
+    background-color: #e1f5c4;
+}
+</style>

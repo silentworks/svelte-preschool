@@ -1,0 +1,14 @@
+{
+  "name": "svelte-preschool",
+  "version": "0.1.0",
+  "main": "app/index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "Andrew Smith",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^0.37.0",
+    "rollup-plugin-svelte": "^1.2.0"
+  }
+}
