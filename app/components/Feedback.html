@@ -1,0 +1,35 @@
+<div class="feedback">
+    <h1 class="feedback__heading">Feedback</h1>
+    <p>You have scored {{userScore(questions)}} out of {{totalScore(questions, totalPoints)}}</p>
+</div>
+
+<script>
+    export default {
+        helpers: {
+            userScore(questions) {
+                return questions.reduce((prev, next) => {
+                    return prev + next.points
+                }, 0);
+            },
+            totalScore(questions, totalPoints) {
+                return questions.length * totalPoints;
+            }
+        },
+        data() {
+            return {
+                totalPoints: 3
+            }
+        }
+    }
+</script>
+
+<style>
+.feedback {
+    text-align: center;
+}
+.feedback__heading {
+    font-size: 3.5rem;
+    padding: 20px;
+    text-align: center;
+}
+</style>

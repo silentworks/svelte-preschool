@@ -1,36 +1,44 @@
 <div class="question-set">
-    <Question 
-        on:checkAnswer='checkAnswer(event.option)'
-        question='{{question}}'
-        options='{{options}}' 
-        resourceUrl='{{resource.url}}'
-    />
+    {{#if question}}
+        <Question 
+            on:checkAnswer='checkAnswer(event.option)'
+            question='{{question}}'
+        />
+    {{else}}
+        <Feedback questions='{{questions}}' totalPoints='3' />
+    {{/if}}
 </div>
 
 <script>
     import Question from './Question.html';
+    import Feedback from './Feedback.html';
+    import { randomQuestion, addTriesToQuestion, addPointToQuestion } from '../checker.js';
     import { questions } from '../data/questions.js';
-
-    let randomQuestion = (questions) => {
-        return questions[Math.floor(Math.random() * questions.length)];
-    }
 
     let question = randomQuestion(questions);
 
     export default {
         methods: {
             checkAnswer(answer) {
-                if (answer === this.get('answer')) {
-                    let question = randomQuestion(questions);
-                    this.set(question);
-                }
+                let currentQuestion = this.get('question');
+                addTriesToQuestion(currentQuestion);
+
+                if (answer === currentQuestion.answer) {
+                    addPointToQuestion(currentQuestion);
+                    let question = randomQuestion(this.get('questions'));
+                    this.set({question});
+                } 
             }
         },
         data() {
-            return question;
+            return {
+                question,
+                questions
+            }
         },
         components: {
-            Question
+            Question,
+            Feedback
         }
     }
 </script>

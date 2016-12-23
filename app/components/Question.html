@@ -1,8 +1,8 @@
 <div class="question bounceInUp">
-    <p class="question__heading">{{question}}</p>
-    <img class="question__image" style="animation: {{animation}} 1.5s" src="{{resourceUrl}}" />
+    <p class="question__heading">{{question.question}}</p>
+    <img class="question__image" style="animation: {{animation}} 1.5s" src="{{question.resource.url}}" />
     <ul class="question__otpion-list no-bullet clearfix">
-    {{#each options as option}}
+    {{#each question.options as option}}
         <li class="question__option-item" on:click='fire( "checkAnswer", { option })'>
             {{option}}
         </li>
@@ -17,9 +17,7 @@
         'flipInX','lightSpeedIn'
     ];
 
-    let randomAnimation  = () => {
-        return animations[Math.floor(Math.random() * animations.length)];
-    };
+    let randomAnimation  = () => animations[Math.floor(Math.random() * animations.length)];
 
     export default {
         onrender() {
