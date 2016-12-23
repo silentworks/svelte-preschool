@@ -10,6 +10,7 @@
     </ul>
     
     {{#if tries}}
+    <p class="question__explanation">{{question.explanation}}</p>
     <button class="question__next" on:click='fire( "next", { question: question })'>Next</button>
     {{/if}}
 </div>
@@ -118,5 +119,9 @@
 .question__option-item-answer {
     box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
     background-color: #79cc00;
+}
+.question__explanation {
+    font-size: 1.9rem;
+    text-align: center;
 }
 </style>

@@ -64,7 +64,7 @@ var template$1 = (function () {
 var addedCss$1 = false;
 function addCss$1 () {
 	var style = document.createElement( 'style' );
-	style.textContent = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    \n.question__heading[svelte-2025575786], [svelte-2025575786] .question__heading {\n    font-size: 3.5rem;\n    padding: 20px;\n    text-align: center;\n}\n.question__image[svelte-2025575786], [svelte-2025575786] .question__image {\n    display: block;\n    height: 300px;\n    width: auto;\n    margin: 40px auto;\n}\n\n.question__option-item[svelte-2025575786], [svelte-2025575786] .question__option-item {\n    width: 43%;\n    margin: 2%;\n    font-size: 2.5rem;\n    padding: 10px;\n    display: inline-block;\n    float: left;\n\n    border: 5px solid #e1f5c4;\n    border-radius: 30%/90%;\n    text-align: center;\n    text-transform: lowercase;\n    cursor: pointer;\n    transition: box-shadow 0.5s, background-color 0.5s;\n}\n.question__option-item[svelte-2025575786]:hover, [svelte-2025575786] .question__option-item:hover {\n    animation: pulse 1s infinite;\n    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);\n    background-color: #e1f5c4;\n}\n.question__next[svelte-2025575786], [svelte-2025575786] .question__next {\n    background-color: #e1f5c4;\n    border: 5px solid #add86d;\n    border-radius: 30%/90%;\n    color: #000;\n    text-align: center;\n    text-transform: lowercase;\n    cursor: pointer;\n    font-size: 1.5rem;\n    padding: 10px;\n    width: 160px;\n    margin: 40px auto;\n    display: block;\n}\n.question__tries-left[svelte-2025575786], [svelte-2025575786] .question__tries-left {\n    text-align: center;\n}\n.question__option-item-answer[svelte-2025575786], [svelte-2025575786] .question__option-item-answer {\n    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);\n    background-color: #79cc00;\n}\n";
+	style.textContent = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      \n.question__heading[svelte-1145037430], [svelte-1145037430] .question__heading {\n    font-size: 3.5rem;\n    padding: 20px;\n    text-align: center;\n}\n.question__image[svelte-1145037430], [svelte-1145037430] .question__image {\n    display: block;\n    height: 300px;\n    width: auto;\n    margin: 40px auto;\n}\n\n.question__option-item[svelte-1145037430], [svelte-1145037430] .question__option-item {\n    width: 43%;\n    margin: 2%;\n    font-size: 2.5rem;\n    padding: 10px;\n    display: inline-block;\n    float: left;\n\n    border: 5px solid #e1f5c4;\n    border-radius: 30%/90%;\n    text-align: center;\n    text-transform: lowercase;\n    cursor: pointer;\n    transition: box-shadow 0.5s, background-color 0.5s;\n}\n.question__option-item[svelte-1145037430]:hover, [svelte-1145037430] .question__option-item:hover {\n    animation: pulse 1s infinite;\n    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);\n    background-color: #e1f5c4;\n}\n.question__next[svelte-1145037430], [svelte-1145037430] .question__next {\n    background-color: #e1f5c4;\n    border: 5px solid #add86d;\n    border-radius: 30%/90%;\n    color: #000;\n    text-align: center;\n    text-transform: lowercase;\n    cursor: pointer;\n    font-size: 1.5rem;\n    padding: 10px;\n    width: 160px;\n    margin: 40px auto;\n    display: block;\n}\n.question__tries-left[svelte-1145037430], [svelte-1145037430] .question__tries-left {\n    text-align: center;\n}\n.question__option-item-answer[svelte-1145037430], [svelte-1145037430] .question__option-item-answer {\n    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);\n    background-color: #79cc00;\n}\n.question__explanation[svelte-1145037430], [svelte-1145037430] .question__explanation {\n    font-size: 1.9rem;\n    text-align: center;\n}\n";
 	document.head.appendChild( style );
 
 	addedCss$1 = true;
@@ -72,7 +72,7 @@ function addCss$1 () {
 
 function renderMainFragment$1 ( root, component ) {
 	var div = document.createElement( 'div' );
-	div.setAttribute( 'svelte-2025575786', '' );
+	div.setAttribute( 'svelte-1145037430', '' );
 	div.className = "question bounceInUp";
 	
 	var p = document.createElement( 'p' );
@@ -175,6 +175,13 @@ function renderMainFragment$1 ( root, component ) {
 }
 
 function renderIfBlock_0$1 ( root, component ) {
+	var p = document.createElement( 'p' );
+	p.className = "question__explanation";
+	
+	var text = document.createTextNode( root.question.explanation );
+	p.appendChild( text );
+	var text1 = document.createTextNode( "\n    " );
+	
 	var button = document.createElement( 'button' );
 	button.className = "question__next";
 	
@@ -194,10 +201,14 @@ function renderIfBlock_0$1 ( root, component ) {
 
 	return {
 		mount: function ( target, anchor ) {
+			target.insertBefore( p, anchor );
+			target.insertBefore( text1, anchor );
 			target.insertBefore( button, anchor );
 		},
 
 		update: function ( changed, root ) {
+			text.data = root.question.explanation;
+			
 			button.__svelte.root = root;
 		},
 
@@ -205,6 +216,8 @@ function renderIfBlock_0$1 ( root, component ) {
 			button.removeEventListener( 'click', clickHandler, false );
 			
 			if ( detach ) {
+				p.parentNode.removeChild( p );
+				text1.parentNode.removeChild( text1 );
 				button.parentNode.removeChild( button );
 			}
 		}
@@ -918,7 +931,8 @@ var questions = [
             url: 'assets/images/apple.png'
         },
         options: ['apple', 'peach', 'pear', 'orange'],
-        answer: 'apple'
+        answer: 'apple',
+        explanation: 'This is an apple'
     },
     {
         id: 2,
@@ -928,7 +942,8 @@ var questions = [
             url: 'assets/images/square.png'
         },
         options: ['square', 'triangle', 'circle', 'rectangle'],
-        answer: 'square'
+        answer: 'square',
+        explanation: 'A square is a shape with four sides of equal length'
     },
     {
         id: 3,
@@ -938,7 +953,8 @@ var questions = [
             url: 'assets/images/three.png'
         },
         options: ['letter', 'number'],
-        answer: 'number'
+        answer: 'number',
+        explanation: 'This is the number 3'
     },
     {
         id: 4,
@@ -948,7 +964,8 @@ var questions = [
             url: 'assets/images/alphabet.png'
         },
         options: ['10', '12', '18', '26'],
-        answer: '26'
+        answer: '26',
+        explanation: 'There are 26 letters in the english alphabet'
     },
     {
         id: 5,
@@ -958,7 +975,8 @@ var questions = [
             url: 'assets/images/triangle.png'
         },
         options: ['square', 'triangle', 'rectangle', 'circle'],
-        answer: 'triangle'
+        answer: 'triangle',
+        explanation: 'A triangle is a shape that has 3 sides'
     }
 ];
 
