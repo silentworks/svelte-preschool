@@ -1,4 +1,3 @@
-import serve from 'rollup-plugin-serve'
 import svelte from 'rollup-plugin-svelte';
 import buble from 'rollup-plugin-buble';
 
