@@ -1,13 +1,17 @@
 <div class="question bounceInUp">
     <p class="question__heading">{{question.question}}</p>
     <img class="question__image" style="animation: {{animation}} 1.5s" src="{{question.resource.url}}" />
-    <ul class="question__otpion-list no-bullet clearfix">
+    <ul class="question__option-list no-bullet clearfix">
     {{#each question.options as option}}
-        <li class="question__option-item" on:click='fire( "checkAnswer", { option })'>
+        <li class="question__option-item {{correctAnswer(question, option, totalTries)}}" on:click='answer(option)'>
             {{option}}
         </li>
     {{/each}}
     </ul>
+    
+    {{#if tries}}
+    <button class="question__next" on:click='fire( "next", { question: question })'>Next</button>
+    {{/if}}
 </div>
 
 <script>
@@ -20,12 +24,38 @@
     let randomAnimation  = () => animations[Math.floor(Math.random() * animations.length)];
 
     export default {
+        helpers: {
+            correctAnswer(question, answer, totalTries) {
+                if (question.tries >= totalTries && question.answer == answer) {
+                    return 'question__option-item-answer';
+                }
+                return '';
+            }
+        },
         onrender() {
             this.observe('question', (newV, oldV) => {
                 if (oldV !== newV) {
                     this.set({animation: randomAnimation()});
                 }
             })
+        },
+        methods: {
+            answer(option) {
+                let question = this.get('question');
+                if (question.tries >= this.get('totalTries')) return;
+                this.fire("answer", {option});
+            }
+        },
+        computed: {
+            tries: (question, totalTries) => { 
+                return question.tries >= totalTries;
+            },
+            triesLeft: (question, totalTries) => {
+                if (question.tries === undefined) {
+                    question.tries = 0;
+                }
+                return (totalTries - question.tries)
+            }
         },
         data() {
             return {
@@ -51,7 +81,7 @@
 .question__option-item {
     width: 43%;
     margin: 2%;
-    font-size : 2.5rem;
+    font-size: 2.5rem;
     padding: 10px;
     display: inline-block;
     float: left;
@@ -67,5 +97,26 @@
     animation: pulse 1s infinite;
     box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
     background-color: #e1f5c4;
+}
+.question__next {
+    background-color: #e1f5c4;
+    border: 5px solid #add86d;
+    border-radius: 30%/90%;
+    color: #000;
+    text-align: center;
+    text-transform: lowercase;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 10px;
+    width: 160px;
+    margin: 40px auto;
+    display: block;
+}
+.question__tries-left {
+    text-align: center;
+}
+.question__option-item-answer {
+    box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
+    background-color: #79cc00;
 }
 </style>

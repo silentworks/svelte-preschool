@@ -1,39 +1,49 @@
 <div class="question-set">
     {{#if question}}
         <Question 
-            on:checkAnswer='checkAnswer(event.option)'
+            on:answer='checkAnswer(event.option)'
+            on:next='onToNext(event.question)'
             question='{{question}}'
+            totalTries='3'
         />
     {{else}}
         <Feedback questions='{{questions}}' totalPoints='3' />
+        <button class="question__reset" on:click='reset()'>Play Again</button>
     {{/if}}
 </div>
 
 <script>
     import Question from './Question.html';
     import Feedback from './Feedback.html';
-    import { randomQuestion, addTriesToQuestion, addPointToQuestion } from '../checker.js';
-    import { questions } from '../data/questions.js';
-
-    let question = randomQuestion(questions);
+    import { randomQuestion, addTriesToQuestion, addPointToQuestion, resetQuestions } from '../checker.js';
 
     export default {
         methods: {
             checkAnswer(answer) {
-                let currentQuestion = this.get('question');
-                addTriesToQuestion(currentQuestion);
+                let question = this.get('question');
+                addTriesToQuestion(question);
 
-                if (answer === currentQuestion.answer) {
-                    addPointToQuestion(currentQuestion);
-                    let question = randomQuestion(this.get('questions'));
-                    this.set({question});
+                if (answer === question.answer) {
+                    addPointToQuestion(question);
+                    question = randomQuestion(this.get('questions'));
                 } 
+                this.set({question});
+            },
+            onToNext(prevQuestion) {
+                addPointToQuestion(prevQuestion);
+                let question = randomQuestion(this.get('questions'));
+                this.set({question});
+            },
+            reset() {
+                let questions = resetQuestions(this.get('questions'));
+                let question = randomQuestion(questions);
+                this.set({questions, question});
             }
         },
         data() {
             return {
-                question,
-                questions
+                question: {},
+                questions: {}
             }
         },
         components: {
@@ -46,5 +56,19 @@
 <style>
     .question-set {
         margin-top: 20px;
+    }
+    .question__reset {
+        background-color: #e1f5c4;
+        border: 5px solid #add86d;
+        border-radius: 30%/90%;
+        color: #000;
+        text-align: center;
+        text-transform: capitalize;
+        cursor: pointer;
+        font-size: 1.5rem;
+        padding: 10px;
+        width: 160px;
+        margin: 40px auto;
+        display: block;
     }
 </style>

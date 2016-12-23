@@ -1,9 +1,10 @@
 import serve from 'rollup-plugin-serve'
 import svelte from 'rollup-plugin-svelte';
+import buble from 'rollup-plugin-buble';
 
 export default {
   entry: 'app/index.js',
-  dest: 'build/bundle.js',
+  dest: 'dist/bundle.js',
   format: 'es',
   plugins: [
     svelte({
@@ -14,6 +15,7 @@ export default {
       // using `include` and `exclude`
       include: 'app/components/**.html'
     }),
+    buble(),
     serve({
       // Folder to serve files from,
       contentBase: '',
