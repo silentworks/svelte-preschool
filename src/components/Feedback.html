@@ -4,22 +4,19 @@
 </div>
 
 <script>
-    export default {
-        helpers: {
-            userScore(questions) {
-                return questions.reduce((prev, next) => {
-                    return prev + next.points
-                }, 0);
-            },
-            totalScore(questions, totalPoints) {
-                return questions.length * totalPoints;
-            }
-        },
-        data() {
-            return {
-                totalPoints: 3
-            }
-        }
+    // props
+    export let totalPoints = 3;
+    export let questions;
+
+    // helpers
+    const userScore = (questions) => {
+        return questions.reduce((prev, next) => {
+            return prev + next.points
+        }, 0);
+    };
+
+    const totalScore = (questions, totalPoints) => {
+        return questions.length * totalPoints;
     }
 </script>
 

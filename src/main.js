@@ -6,7 +6,7 @@ let question = randomQuestion(questions);
 
 const app = new App({
     target: document.getElementById('app'),
-    data: {
+    props: {
         questions,
         question
     }

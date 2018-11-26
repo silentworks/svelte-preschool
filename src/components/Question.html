@@ -1,67 +1,74 @@
 <div class="question bounceInUp">
     <p class="question__heading">{question.question}</p>
-    <img class="question__image" style="animation: {animation} 1.5s" src="{question.resource.url}" alt="{question.question}" />
+    <img class="question__image" style="animation: {animation} 1.5s" src="{question.resource.url}" alt="Image" />
     <ul class="question__option-list no-bullet clearfix">
     {#each question.options as option}
-        <li class="question__option-item {correctAnswer(question, option, totalTries)}" on:click='answer(option)'>
+        <li class="question__option-item {correctAnswer(question, option, totalTries)}" on:click="{() => answer(option)}">
             {option}
         </li>
     {/each}
     </ul>
     
-    {#if tries}
-    <p class="question__explanation">{question.explanation}</p>
-    <button class="question__next" on:click='fire( "next", { question: question })'>Next</button>
+    {#if tries()}
+        <p class="question__explanation">{question.explanation}</p>
+        <button class="question__next" on:click="{() => nextQuestion(question)}">Next</button>
     {/if}
 </div>
 
 <script>
+    import { beforeRender, createEventDispatcher } from "svelte";
+    const dispatch = createEventDispatcher();
+
+    // props
+    export let question;
+    export let totalTries;
+
+    // internal state
+    let previousQuestion;
+
     let animations = [
         'zoomIn','flipInY',
         'fadeIn','bounceIn',
         'flipInX','lightSpeedIn'
     ];
 
-    let randomAnimation  = () => animations[Math.floor(Math.random() * animations.length)];
+    let randomAnimation = () => animations[Math.floor(Math.random() * animations.length)];
 
-    export default {
-        helpers: {
-            correctAnswer(question, answer, totalTries) {
-                if (question.tries >= totalTries && question.answer == answer) {
-                    return 'question__option-item-answer';
-                }
-                return '';
-            }
-        },
-        onstate({ changed, current, previous }) {
-            if (changed.question) {
-                this.set({animation: randomAnimation()});
-            }
-        },
-        methods: {
-            answer(option) {
-                let { question } = this.get();
-                if (question.tries >= this.get('totalTries')) return;
-                this.fire("answer", {option});
-            }
-        },
-        computed: {
-            tries: ({ question, totalTries }) => { 
-                return question.tries >= totalTries;
-            },
-            triesLeft: ({ question, totalTries }) => {
-                if (question.tries === undefined) {
-                    question.tries = 0;
-                }
-                return (totalTries - question.tries)
-            }
-        },
-        data() {
-            return {
-                animation: randomAnimation()
-            }
+    let animation = randomAnimation();
+
+    // methods
+    const correctAnswer = (question, answer, totalTries) => {
+        if (question.tries >= totalTries && question.answer == answer) {
+            return 'question__option-item-answer';
         }
+        return '';
+    };
+
+    const answer = (option) => {
+        if (question.tries >= totalTries) return;
+        dispatch("answer", { option });
     }
+
+    const nextQuestion = (question) => {
+        dispatch("next", { question });
+    };
+
+    // hook
+    beforeRender(() => {
+        if (question !== previousQuestion) {
+            animation = randomAnimation();
+        }
+        previousQuestion = question;
+    });
+
+    // computed
+    let tries = () => question.tries >= totalTries;
+    let triesLeft = () => {
+        if (question.tries === undefined) {
+            question.tries = 0;
+        }
+        return (totalTries - question.tries)
+    };
 </script>
 
 <style>
