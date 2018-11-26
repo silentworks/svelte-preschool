@@ -1,15 +1,15 @@
 <div class="question-set">
-    {{#if question}}
+    {#if question}
         <Question 
             on:answer='checkAnswer(event.option)'
             on:next='onToNext(event.question)'
-            question='{{question}}'
+            question='{question}'
             totalTries='3'
         />
-    {{else}}
-        <Feedback questions='{{questions}}' totalPoints='3' />
+    {:else}
+        <Feedback questions='{questions}' totalPoints='3' />
         <button class="question__reset" on:click='reset()'>Play Again</button>
-    {{/if}}
+    {/if}
 </div>
 
 <script>
@@ -20,22 +20,24 @@
     export default {
         methods: {
             checkAnswer(answer) {
-                let question = this.get('question');
+                let { question, questions } = this.get();
                 addTriesToQuestion(question);
 
                 if (answer === question.answer) {
                     addPointToQuestion(question);
-                    question = randomQuestion(this.get('questions'));
+                    question = randomQuestion(questions);
                 } 
                 this.set({question});
             },
             onToNext(prevQuestion) {
+                let { questions } = this.get();
                 addPointToQuestion(prevQuestion);
-                let question = randomQuestion(this.get('questions'));
+                let question = randomQuestion(questions);
                 this.set({question});
             },
             reset() {
-                let questions = resetQuestions(this.get('questions'));
+                let { questions } = this.get();
+                questions = resetQuestions(questions);
                 let question = randomQuestion(questions);
                 this.set({questions, question});
             }

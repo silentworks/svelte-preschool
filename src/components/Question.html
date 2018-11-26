@@ -1,18 +1,18 @@
 <div class="question bounceInUp">
-    <p class="question__heading">{{question.question}}</p>
-    <img class="question__image" style="animation: {{animation}} 1.5s" src="{{question.resource.url}}" />
+    <p class="question__heading">{question.question}</p>
+    <img class="question__image" style="animation: {animation} 1.5s" src="{question.resource.url}" alt="{question.question}" />
     <ul class="question__option-list no-bullet clearfix">
-    {{#each question.options as option}}
-        <li class="question__option-item {{correctAnswer(question, option, totalTries)}}" on:click='answer(option)'>
-            {{option}}
+    {#each question.options as option}
+        <li class="question__option-item {correctAnswer(question, option, totalTries)}" on:click='answer(option)'>
+            {option}
         </li>
-    {{/each}}
+    {/each}
     </ul>
     
-    {{#if tries}}
-    <p class="question__explanation">{{question.explanation}}</p>
+    {#if tries}
+    <p class="question__explanation">{question.explanation}</p>
     <button class="question__next" on:click='fire( "next", { question: question })'>Next</button>
-    {{/if}}
+    {/if}
 </div>
 
 <script>
@@ -33,25 +33,23 @@
                 return '';
             }
         },
-        onrender() {
-            this.observe('question', (newV, oldV) => {
-                if (oldV !== newV) {
-                    this.set({animation: randomAnimation()});
-                }
-            })
+        onstate({ changed, current, previous }) {
+            if (changed.question) {
+                this.set({animation: randomAnimation()});
+            }
         },
         methods: {
             answer(option) {
-                let question = this.get('question');
+                let { question } = this.get();
                 if (question.tries >= this.get('totalTries')) return;
                 this.fire("answer", {option});
             }
         },
         computed: {
-            tries: (question, totalTries) => { 
+            tries: ({ question, totalTries }) => { 
                 return question.tries >= totalTries;
             },
-            triesLeft: (question, totalTries) => {
+            triesLeft: ({ question, totalTries }) => {
                 if (question.tries === undefined) {
                     question.tries = 0;
                 }

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: schoolBell;
+    src: url(assets/Schoolbell.ttf);
+    font-style : normal;
+    font-weight : 100;
+}
+body {
+    font-size: 5em;
+    color: #f05053;
+    font-family: schoolBell;
+    background-color: #f9f9f9;
+}

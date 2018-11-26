@@ -11,3 +11,5 @@ const app = new App({
         question
     }
 });
+
+export default app;
